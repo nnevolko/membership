@@ -9,6 +9,7 @@ const App: FC<any> = () => {
   const [memberships, setMemberships] = useState<Array<Membership>>([]);
   const [search, setSearch] = useState<string>();
   const [activeMembership, setActiveMembership] = useState<Membership>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const loadMemberships = () => {
     return fetchMembers()
@@ -21,10 +22,12 @@ const App: FC<any> = () => {
 
   const loadDetailsModal = (membership: Membership) => {
     setActiveMembership(membership);
+    setIsModalOpen(true);
   }
 
   const closeDetailsModal = () => {
-    setActiveMembership(undefined);
+   // setActiveMembership(undefined);
+    setIsModalOpen(false);
   }
 
   return (
@@ -48,7 +51,7 @@ const App: FC<any> = () => {
               <tbody>
                   { memberships.filter(membership => !search
                     || membership.user?.name.toLowerCase().includes(search.toLowerCase())
-                    || membership.user?.email.includes(search))
+                    || membership.user?.email.toLowerCase().includes(search.toLowerCase()))
                     .map(membership => (
                       <tr key={membership.id}>
                         <td>{membership.user?.name}</td>
@@ -63,10 +66,10 @@ const App: FC<any> = () => {
             </table>
           )
         }
-        { activeMembership &&
+        { activeMembership && isModalOpen &&
           (
             <Modal isOpen={!!activeMembership}>
-              <ModalHeader toggle={e => closeDetailsModal}>User Details</ModalHeader>
+              <ModalHeader toggle={e => closeDetailsModal()}>User Details</ModalHeader>
               <ModalBody>
                 <div>
                   <p>Name: {activeMembership.user?.name}</p>
