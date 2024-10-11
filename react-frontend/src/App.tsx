@@ -26,8 +26,8 @@ const App: FC<any> = () => {
   }
 
   const closeDetailsModal = () => {
-   // setActiveMembership(undefined);
-    setIsModalOpen(false);
+    setActiveMembership(undefined);
+   setIsModalOpen(!isModalOpen);
   }
 
   return (
@@ -66,10 +66,10 @@ const App: FC<any> = () => {
             </table>
           )
         }
-        { activeMembership && isModalOpen &&
+        { activeMembership &&
           (
-            <Modal isOpen={!!activeMembership}>
-              <ModalHeader toggle={e => closeDetailsModal()}>User Details</ModalHeader>
+            <Modal isOpen={isModalOpen} >
+              <ModalHeader toggle={closeDetailsModal}>User Details</ModalHeader>
               <ModalBody>
                 <div>
                   <p>Name: {activeMembership.user?.name}</p>
