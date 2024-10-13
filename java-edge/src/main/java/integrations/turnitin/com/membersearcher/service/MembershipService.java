@@ -35,17 +35,7 @@ public class MembershipService {
 			});
 
 		return	updatedFuture;
-
-		/*return membershipBackendClient.fetchMemberships()
-				.thenCompose(members -> {
-					CompletableFuture<?>[] userCalls = members.getMemberships().stream()
-							.map(member -> membershipBackendClient.fetchUser(member.getUserId())
-									.thenApply(member::setUser))
-							.toArray(CompletableFuture<?>[]::new);
-					return CompletableFuture.allOf(userCalls)
-							.thenApply(nil -> members);
-				});
-*/
+		
 	}
 
 	public MembershipList associateUsersWithMemberships(MembershipList membershipList, UserList userList){
